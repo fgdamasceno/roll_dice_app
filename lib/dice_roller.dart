@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+final randomizer = Random();
+
 class DiceRoller extends StatefulWidget {
   const DiceRoller({super.key});
 
@@ -9,24 +11,12 @@ class DiceRoller extends StatefulWidget {
 }
 
 class _DiceRollerState extends State<DiceRoller> {
-  List<String> diceImages = [
-    'assets/dice-images/dice-1.png',
-    'assets/dice-images/dice-2.png',
-    'assets/dice-images/dice-3.png',
-    'assets/dice-images/dice-4.png',
-    'assets/dice-images/dice-5.png',
-    'assets/dice-images/dice-6.png',
-  ];
-
-  String activeDiceImage = 'assets/dice-images/dice-1.png';
+  int currentDiceRoll = 1;
 
   void rollDice() {
-    // Gera um numero randomico
-    int dice = Random().nextInt(6);
-
     setState(() {
       // Seleciona a imagem do dado de acordo com o numero randomico gerado
-      activeDiceImage = diceImages[dice];
+      currentDiceRoll = randomizer.nextInt(6) + 1;
     });
   }
 
@@ -35,7 +25,10 @@ class _DiceRollerState extends State<DiceRoller> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(activeDiceImage, width: 200.0),
+        Image.asset(
+          'assets/dice-images/dice-$currentDiceRoll.png',
+          width: 200.0,
+        ),
         SizedBox(height: 40.0),
         TextButton(
           onPressed: rollDice,
